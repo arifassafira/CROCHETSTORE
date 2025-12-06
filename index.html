@@ -8,9 +8,61 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
+    html {
+  scroll-behavior: smooth;
+}
+/* ================= NAVBAR ================= */
+.navbar{
+  width:100%;
+  padding:12px 24px;
+  background:rgb(255, 255, 255);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:9999;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.nav-brand{
+  font-weight:700;
+  font-size:20px;
+  color:var(--pink-dark);
+}
+
+.nav-links{
+  list-style:none;
+  display:flex;
+  gap:20px;
+  margin:0;
+  padding:0;
+}
+
+.nav-links a{
+  text-decoration:none;
+  font-weight:600;
+  color:#555;
+  transition:.2s;
+}
+
+.nav-links a:hover{
+  color:var(--pink-dark);
+}
+
+.nav-cart{
+  background:var(--pink);
+  border:0;
+  color:white;
+  padding:8px 14px;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:600;
+}
     :root{
       --pink:#ffb6d2;
-      --pink-dark:#ff8eb0;
+      --pink-dark:#ff80bb;
       --muted:#9b98a6;
       --card-bg:#fff;
     }
@@ -20,6 +72,14 @@
       font-family:"Quicksand",sans-serif;
       background:linear-gradient(180deg,#fff,#fff7fc);
     }
+    .nav-links a.active {
+  color: var(--pink-dark);
+  font-weight: 700;
+}
+.navbar {
+  position: sticky;
+  top: 0;
+}
 
     /* =============== LAYOUT ================= */
     .container{
@@ -55,7 +115,7 @@
       width:56px;height:56px;border-radius:14px;
       background:linear-gradient(135deg,var(--pink),var(--pink-dark));
       display:flex;align-items:center;justify-content:center;
-      font-weight:bold;color:white;font-size:20px;
+      font-weight:bold;color:rgb(255, 255, 255);font-size:20px;
     }
 
     /* Search */
@@ -129,10 +189,54 @@
       width:350px;box-shadow:0 6px 20px rgba(213, 255, 158, 0.2);
     }
     .modal.show{display:flex;}
+
+    /* ================= FOOTER ================= */
+.footer{
+  margin-top:50px;
+  background:linear-gradient(135deg, var(--pink), var(--pink-dark));
+  padding:30px 20px;
+  color:white;
+  text-align:center;
+  border-radius:20px 20px 0 0;
+}
+
+.footer h2{
+  margin-top:0;
+  font-size:22px;
+  font-weight:700;
+}
+
+.footer p{
+  margin:6px 0;
+  font-size:15px;
+}
+
+.footer small{
+  opacity:0.8;
+}
   </style>
 </head>
 
 <body>
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+  <div class="brand">
+    <div class="header">
+      <div class="brand">
+        <div class= "logo">🧶</div>
+        <div>
+          <h2 style="margin:0;">⋆˚𝜗𝑪𝒓𝒂𝒇𝒕 𝑺𝒕𝒐𝒓𝒆𝜚˚⋆</h2>
+          <small style="color:gray;">𝙷𝚊𝚗𝚍𝚖𝚊𝚍𝚎 𝙲𝚛𝚘𝚌𝚑𝚎𝚝 𝚂𝚑𝚘𝚙</small>
+        </div>
+      </div>
+      <div class="search">
+        <input id="search" placeholder="Search..." />
+        <button class="btn ghost" onclick="resetSearch()">Reset</button>
+      </div>
+
+       <button class="nav-cart" onclick="toggleCart()">🛒</button>
+    </div>
+</nav>
 
 <!-- ================= CART PANEL ================= -->
 <div class="cart-panel" id="cartPanel">
@@ -145,7 +249,7 @@
 
 <!-- ================= MODAL DETAIL ================= -->
 <div class="modal" id="productModal">
-  <div class="modal-content">
+  <div class="modal-content"> 
     <h2 id="modalTitle"></h2>
     <img id="modalImg" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin:12px 0;">
     <p><strong>Kategori:</strong> <span id="modalCat"></span></p>
@@ -159,25 +263,7 @@
 <div class="container">
   <!-- ================= MAIN ================= -->
   <main class="main">
-    <div class="header">
-      <div class="brand">
-        <div class= "logo"></div>
-        <div>
-          <h2 style="margin:0;">⋆˚𝜗𝑪𝒓𝒂𝒇𝒕 𝑺𝒕𝒐𝒓𝒆𝜚˚⋆</h2>
-          <small style="color:gray;">𝙷𝚊𝚗𝚍𝚖𝚊𝚍𝚎 𝙲𝚛𝚘𝚌𝚑𝚎𝚝 𝚂𝚑𝚘𝚙</small>
-        </div>
-      </div>
-
-      <div class="search">
-        <input id="search" placeholder="Search..." />
-        <button class="btn ghost" onclick="resetSearch()">Reset</button>
-      </div>
-
-      <button class="btn ghost" onclick="toggleCart()">Cart</button>
-    </div>
-
-    <h3>Featured Products</h3>
-    <p>Showing <span id="count"></span> items</p>
+    <p>Showing <span id="count"></span> product items</p>
 
     <div class="grid" id="productGrid"></div>
   </main>
@@ -197,7 +283,6 @@
     <br><br>
     <button class="btn ghost" onclick="resetFilters()" style="width:100%;">Reset Filters</button>
   </aside>
-
 </div>
 
 <script>
@@ -446,7 +531,26 @@ function checkout() {
 
   window.open(url, "_blank");
 }
+// ================= NAVBAR ACTIVE LINK =================
+const navLinks = document.querySelectorAll(".nav-links a");
+
+navLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.forEach(l => l.classList.remove("active"));
+    link.classList.add("active");
+  });
+});
 </script>
 
+<!-- ================= FOOTER ================= -->
+<footer class="footer"> 
+  <h2>Kontak</h2>
+
+  <p><strong>WhatsApp:</strong>+62858-9280-3457</p>
+  <p><strong>Instagram:</strong>@CraftStore_</p>
+
+  <br>
+  <small>© 2023 Craft Store</small>
+</footer>
 </body>
 </html>
